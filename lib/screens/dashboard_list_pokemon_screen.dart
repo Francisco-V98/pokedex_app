@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/intrastrucuture/models/pokemon_basic_model.dart';
+import 'package:pokedex_app/widgets/widgets.dart';
 
 class DashboardListPokemonScreen extends StatelessWidget {
   const DashboardListPokemonScreen({super.key});
@@ -8,6 +9,7 @@ class DashboardListPokemonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      appBar: AppBarPokedex(title: 'Pokedex'),
       body: _Body(),
     );
   }
@@ -21,35 +23,36 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  List<PokemonBasicModel> pokemons = [];
-
-  @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-    getPokemonBasic();
-  }
-
-  Future getPokemonBasic() async {
-    const url = 'https://pokeapi.co/api/v2/pokemon?limit=50';
-    var dio = Dio();
-    try {
-      Response response = await dio.get(url);
-      if (response.statusCode == 200) {
-        List jsonData = response.data['Result'];
-        setState(() {
-          pokemons = jsonData.map((e) => PokemonBasicModel.fromJson(e)).toList();
-        });
-      }
-    } catch (e) {
-      // ignore: avoid_print
-      print('Error: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('data'),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+              childCount: 4,
+              (context, index) {
+                return const CardPokemonListView(
+                  backgroundColor: Colors.blueAccent,
+                  idPokemon: '004',
+                  namePokemon: 'charmander',
+                );
+              },
+            ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.7,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+
+
+
