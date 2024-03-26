@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-PokemonModel pokemonModelFromJson(String str) => PokemonModel.fromJson(json.decode(str));
+PokemonBasicModel pokemonModelFromJson(String str) => PokemonBasicModel.fromJson(json.decode(str));
 
-String pokemonModelToJson(PokemonModel data) => json.encode(data.toJson());
+String pokemonModelToJson(PokemonBasicModel data) => json.encode(data.toJson());
 
-class PokemonModel {
+class PokemonBasicModel {
     final int? count;
     final String? next;
     final dynamic previous;
     final List<Result>? results;
 
-    PokemonModel({
+    PokemonBasicModel({
         this.count,
         this.next,
         this.previous,
         this.results,
     });
 
-    factory PokemonModel.fromJson(Map<String, dynamic> json) => PokemonModel(
+    factory PokemonBasicModel.fromJson(Map<String, dynamic> json) => PokemonBasicModel(
         count: json["count"],
         next: json["next"],
         previous: json["previous"],

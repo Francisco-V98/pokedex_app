@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/intrastrucuture/models/pokemon_model.dart';
+import 'package:pokedex_app/intrastrucuture/models/pokemon_basic_model.dart';
 
 class DashboardListPokemonScreen extends StatelessWidget {
   const DashboardListPokemonScreen({super.key});
@@ -21,23 +21,23 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  List<PokemonModel> pokemons = [];
+  List<PokemonBasicModel> pokemons = [];
 
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
-    getPokemon();
+    getPokemonBasic();
   }
 
-  Future getPokemon() async {
+  Future getPokemonBasic() async {
     const url = 'https://pokeapi.co/api/v2/pokemon?limit=50';
     var dio = Dio();
     try {
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
-        List jsonData = response.data;
+        List jsonData = response.data['Result'];
         setState(() {
-          pokemons = jsonData.map((e) => PokemonModel.fromJson(e)).toList();
+          pokemons = jsonData.map((e) => PokemonBasicModel.fromJson(e)).toList();
         });
       }
     } catch (e) {
