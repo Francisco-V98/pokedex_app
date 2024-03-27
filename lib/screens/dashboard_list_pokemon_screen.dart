@@ -26,7 +26,7 @@ class _BodyState extends State<_Body> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16),
       child: CustomScrollView(
         slivers: <Widget>[
           SliverGrid(
@@ -42,7 +42,7 @@ class _BodyState extends State<_Body> {
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 0.7,
+              mainAxisExtent: 178,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
             ),
@@ -52,7 +52,3 @@ class _BodyState extends State<_Body> {
     );
   }
 }
-
-
-
-
