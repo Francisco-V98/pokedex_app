@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_basic_provider.dart';
 import 'package:pokedex_app/screens/screens.dart';
 import 'package:provider/provider.dart';
 
@@ -13,9 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) {},
-        )
+        ChangeNotifierProvider(create: (context) => PokemonBasicProvider()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
