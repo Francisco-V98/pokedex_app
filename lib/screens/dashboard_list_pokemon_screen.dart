@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/intrastrucuture/models/pokemon_basic_model.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_basic_provider.dart';
 import 'package:pokedex_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class DashboardListPokemonScreen extends StatelessWidget {
   const DashboardListPokemonScreen({super.key});
@@ -15,6 +15,8 @@ class DashboardListPokemonScreen extends StatelessWidget {
   }
 }
 
+
+
 class _Body extends StatefulWidget {
   const _Body();
 
@@ -23,31 +25,56 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+  Future<void> getPokemons() async {
+    await Provider.of<PokemonBasicProvider>(context, listen: false)
+        .getAllPokemons();
+  }
+
+  @override
+  void initState() {
+    getPokemons();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              childCount: 4,
-              (context, index) {
-                return const CardPokemonListView(
-                  backgroundColor: Colors.blueAccent,
-                  idPokemon: '004',
-                  namePokemon: 'charmander',
-                );
-              },
-            ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: 178,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-          ),
-        ],
+      child: Consumer<PokemonBasicProvider>(
+        builder: (context, value, child) {
+          final pokemons = PokemonBasicProvider().pokemons;
+
+          if (pokemons.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 4,
+                  (context, index) {
+                    final pokemon = pokemons[index];
+
+                    return CardPokemonListView(
+                      backgroundColor: Colors.blueAccent,
+                      idPokemon: pokemon.id,
+                      namePokemon: pokemon.name,
+                    );
+                  },
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 178,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
