@@ -25,8 +25,9 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+  
   Future<void> getPokemons() async {
-    await Provider.of<PokemonBasicProvider>(context, listen: false)
+    await Provider.of<PokemonBasicProvider>(context)
         .getAllPokemons();
   }
 
@@ -42,7 +43,7 @@ class _BodyState extends State<_Body> {
       padding: const EdgeInsets.all(16),
       child: Consumer<PokemonBasicProvider>(
         builder: (context, value, child) {
-          final pokemons = PokemonBasicProvider().pokemons;
+          final pokemons = PokemonBasicProvider().pokemonsList;
 
           if (pokemons.isEmpty) {
             return const Center(
@@ -60,7 +61,7 @@ class _BodyState extends State<_Body> {
 
                     return CardPokemonListView(
                       backgroundColor: Colors.blueAccent,
-                      idPokemon: pokemon.id,
+                      idPokemon: 'pokemon.id',
                       namePokemon: pokemon.name,
                     );
                   },
