@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_basic_provider.dart';
 import 'package:pokedex_app/screens/screens.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,11 +12,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DashboardListPokemonScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => PokemonBasicProvider()),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: DashboardListPokemonScreen(),
+      ),
     );
   }
 }
-
-
