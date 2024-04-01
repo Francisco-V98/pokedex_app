@@ -25,16 +25,16 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+
+  @override
+  void didChangeDependencies() {
+    getPokemons();
+    super.didChangeDependencies();
+  }
   
   Future<void> getPokemons() async {
     await Provider.of<PokemonBasicProvider>(context)
         .getAllPokemons();
-  }
-
-  @override
-  void initState() {
-    getPokemons();
-    super.initState();
   }
 
   @override
@@ -43,19 +43,15 @@ class _BodyState extends State<_Body> {
       padding: const EdgeInsets.all(16),
       child: Consumer<PokemonBasicProvider>(
         builder: (context, value, child) {
-          final pokemons = PokemonBasicProvider().pokemonsList;
+          final pokemons =
+              Provider.of<PokemonBasicProvider>(context).pokemonsList;
 
-          if (pokemons.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
 
           return CustomScrollView(
             slivers: <Widget>[
               SliverGrid(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: 4,
+                  childCount: pokemons.length,
                   (context, index) {
                     final pokemon = pokemons[index];
 

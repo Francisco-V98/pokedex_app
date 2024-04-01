@@ -15,9 +15,9 @@ class PokemonBasicService {
       Response response = await dio.get(url);
 
       if (response.statusCode == 200) {
-        List<dynamic> dataPokemon = response.data['results'];
-        List<PokemonBasicModel> pokemons = dataPokemon
-            .map((json) => PokemonBasicModel.fromJson(json))
+        List<dynamic> pokemonData = response.data['results'];
+        List<PokemonBasicModel> pokemons = pokemonData
+            .map((pokemon) => PokemonBasicModel.fromJson(pokemon))
             .toList();
         return pokemons;
       } else {
