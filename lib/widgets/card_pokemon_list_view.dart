@@ -3,8 +3,8 @@ import 'package:pokedex_app/widgets/widgets.dart';
 
 class CardPokemonListView extends StatelessWidget {
   final Color backgroundColor;
-  final String idPokemon;
-  // final String imgPokemon;
+  final int idPokemon;
+  final int imgPokemon;
   final String namePokemon;
   const CardPokemonListView({
     super.key,
@@ -12,6 +12,7 @@ class CardPokemonListView extends StatelessWidget {
     required this.idPokemon,
     // required this.imgPokemon,
     required this.namePokemon,
+    required this.imgPokemon,
   });
 
   @override
@@ -37,7 +38,7 @@ class CardPokemonListView extends StatelessWidget {
               ),
             ),
             Text(
-              idPokemon,
+              '#${idPokemon.toString().padLeft(3, '0')}',
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
@@ -45,11 +46,13 @@ class CardPokemonListView extends StatelessWidget {
                 letterSpacing: 1,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 40,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Image.network(
+                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$imgPokemon.png',
+                // width: 50,
+                height: 70,
+                fit: BoxFit.contain,
               ),
             ),
             const ChipTypePokemon(

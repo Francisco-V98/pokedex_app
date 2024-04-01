@@ -15,8 +15,6 @@ class DashboardListPokemonScreen extends StatelessWidget {
   }
 }
 
-
-
 class _Body extends StatefulWidget {
   const _Body();
 
@@ -25,16 +23,14 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-
   @override
   void didChangeDependencies() {
     getPokemons();
     super.didChangeDependencies();
   }
-  
+
   Future<void> getPokemons() async {
-    await Provider.of<PokemonBasicProvider>(context)
-        .getAllPokemons();
+    await Provider.of<PokemonBasicProvider>(context).getAllPokemons();
   }
 
   @override
@@ -46,7 +42,6 @@ class _BodyState extends State<_Body> {
           final pokemons =
               Provider.of<PokemonBasicProvider>(context).pokemonsList;
 
-
           return CustomScrollView(
             slivers: <Widget>[
               SliverGrid(
@@ -57,14 +52,15 @@ class _BodyState extends State<_Body> {
 
                     return CardPokemonListView(
                       backgroundColor: Colors.blueAccent,
-                      idPokemon: 'pokemon.id',
+                      idPokemon: (index + 1),
                       namePokemon: pokemon.name,
+                      imgPokemon: (index + 1),
                     );
                   },
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 178,
+                  mainAxisExtent: 150,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
