@@ -51,7 +51,7 @@ class _BodyState extends State<_Body> {
                     final pokemon = pokemons[index];
 
                     return CardPokemonListView(
-                      backgroundColor: Colors.blueAccent,
+                      // backgroundColor: Colors.blueAccent,
                       idPokemon: (index + 1),
                       namePokemon: pokemon.name,
                       imgPokemon: (index + 1),

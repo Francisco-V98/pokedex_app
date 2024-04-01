@@ -3,13 +3,13 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:pokedex_app/widgets/widgets.dart';
 
 class CardPokemonListView extends StatefulWidget {
-  final Color backgroundColor;
+  // final Color backgroundColor;
   final int idPokemon;
   final int imgPokemon;
   final String namePokemon;
   const CardPokemonListView({
     super.key,
-    required this.backgroundColor,
+    // required this.backgroundColor,
     required this.idPokemon,
     // required this.imgPokemon,
     required this.namePokemon,
@@ -83,14 +83,14 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
               child: Image.network(
                 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${widget.imgPokemon}.png',
                 // width: 50,
-                height: 70,
+                height: 93,
                 fit: BoxFit.contain,
               ),
             ),
-            const ChipTypePokemon(
-              textChip: 'Fuego',
-              backgroundChip: Colors.deepOrange,
-            ),
+            // const ChipTypePokemon(
+            //   textChip: 'Fuego',
+            //   backgroundChip: Colors.deepOrange,
+            // ),
           ],
         ),
       ),
