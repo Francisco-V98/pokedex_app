@@ -1,19 +1,15 @@
+import 'package:pokedex_app/intrastrucuture/models/pokemon_stats_model.dart';
+
 class PokemonDetailModel {
-  final int id;
-  final String name;
-  final String url;
+  PokemonStatsModel stats;
 
   PokemonDetailModel({
-    required this.id,
-    required this.name,
-    required this.url,
+    required this.stats,
   });
 
   factory PokemonDetailModel.fromJson(Map<String, dynamic> json) {
     return PokemonDetailModel(
-      id: json['id'],
-      name: json['name'],
-      url: json['url'],
+      stats: PokemonStatsModel.fromJson(json['stats']),
     );
   }
 }

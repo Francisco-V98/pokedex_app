@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:pokedex_app/intrastrucuture/models/pokemon_detail_model.dart';
+import 'package:pokedex_app/intrastrucuture/models/pokemon_stats_model.dart';
 
 import '../models/pokemon_basic_model.dart';
 
@@ -29,13 +29,13 @@ class PokemonBasicService {
   }
 
   // Service to get pokemon details
-  Future<PokemonDetailModel> getPokemonDetails(String namePokemon) async {
+  Future<PokemonStatsModel> getPokemonDetails(String namePokemon) async {
     final nameLowerCase = namePokemon.toLowerCase();
     try {
       String url = '$baseUrl/pokemon/$nameLowerCase';
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
-        return PokemonDetailModel.fromJson(response.data);
+        return PokemonStatsModel.fromJson(response.data);
       } else {
         throw Exception('Failed to load pokemon details: ${response.statusCode}');
       }

@@ -91,7 +91,7 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Image.network(
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${widget.imgPokemon}.png',
+                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.imgPokemon}.png',
                 // width: 50,
                 height: 93,
                 fit: BoxFit.contain,
@@ -107,3 +107,5 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
     );
   }
 }
+
+

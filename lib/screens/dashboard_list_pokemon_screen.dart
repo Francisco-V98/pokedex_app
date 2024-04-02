@@ -23,11 +23,6 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
-  // @override
-  // void didChangeDependencies() {
-  //   getPokemons();
-  //   super.didChangeDependencies();
-  // }
 
   @override
   void initState() {
