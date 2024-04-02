@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:pokedex_app/widgets/widgets.dart';
+import 'package:pokedex_app/screens/pokemon_detail_screen.dart';
 
 class CardPokemonListView extends StatefulWidget {
   // final Color backgroundColor;
@@ -9,9 +9,7 @@ class CardPokemonListView extends StatefulWidget {
   final String namePokemon;
   const CardPokemonListView({
     super.key,
-    // required this.backgroundColor,
     required this.idPokemon,
-    // required this.imgPokemon,
     required this.namePokemon,
     required this.imgPokemon,
   });
@@ -50,7 +48,19 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PokemonDetailScreen(
+              backgroundColor: _backgroundColor,
+              idPokemon: widget.idPokemon,
+              namePokemon: widget.namePokemon,
+              imgPokemon: widget.imgPokemon,
+            )
+          ),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
