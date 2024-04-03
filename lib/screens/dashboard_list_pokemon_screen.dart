@@ -23,14 +23,23 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+
   @override
-  void didChangeDependencies() {
+  void initState() {
+    super.initState();
+    _loadPokemons();
     getPokemons();
-    super.didChangeDependencies();
+  }
+
+  Future<void> _loadPokemons() async {
+    await Future.delayed(Duration
+        .zero); // Esperar un ciclo de renderizado para obtener un contexto válido
+    await getPokemons();
   }
 
   Future<void> getPokemons() async {
-    await Provider.of<PokemonBasicProvider>(context).getAllPokemons();
+    await Provider.of<PokemonBasicProvider>(context, listen: false)
+        .getAllPokemons();
   }
 
   @override
@@ -51,7 +60,6 @@ class _BodyState extends State<_Body> {
                     final pokemon = pokemons[index];
 
                     return CardPokemonListView(
-                      // backgroundColor: Colors.blueAccent,
                       idPokemon: (index + 1),
                       namePokemon: pokemon.name,
                       imgPokemon: (index + 1),

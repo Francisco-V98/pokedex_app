@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:pokedex_app/widgets/widgets.dart';
+import 'package:pokedex_app/screens/pokemon_details_screen.dart';
 
 class CardPokemonListView extends StatefulWidget {
   // final Color backgroundColor;
@@ -9,9 +9,7 @@ class CardPokemonListView extends StatefulWidget {
   final String namePokemon;
   const CardPokemonListView({
     super.key,
-    // required this.backgroundColor,
     required this.idPokemon,
-    // required this.imgPokemon,
     required this.namePokemon,
     required this.imgPokemon,
   });
@@ -50,7 +48,19 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PokemonDetailScreen(
+              backgroundColor: _backgroundColor,
+              idPokemon: widget.idPokemon,
+              namePokemon: widget.namePokemon,
+              imgPokemon: widget.imgPokemon,
+            )
+          ),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -81,7 +91,7 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Image.network(
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${widget.imgPokemon}.png',
+                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.imgPokemon}.png',
                 // width: 50,
                 height: 93,
                 fit: BoxFit.contain,
@@ -97,3 +107,5 @@ class _CardPokemonListViewState extends State<CardPokemonListView> {
     );
   }
 }
+
+
