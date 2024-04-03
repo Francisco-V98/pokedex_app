@@ -13,6 +13,59 @@ class LineBarIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: SizedBox(
+        width: 320,
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Text(
+                  title.toUpperCase(),
+                  style:  TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                ),
+                Text(
+                  title.toUpperCase(),
+                  style:  const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black38,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Stack(
+              children: [
+                SizedBox(
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(100),
+                    minHeight: 24,
+                    value: value / 100,
+                    color: color,
+                    backgroundColor: color.withOpacity(0.2),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    value.toString(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_detail_provider.dart';
+import 'package:pokedex_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
@@ -140,12 +141,36 @@ class _BodyState extends State<_Body> {
                       children: [
                         Column(
                           children: [
-                            Text('hp: ${stats.hp}'),
-                            Text('attack: ${stats.attack}'),
-                            Text('defense: ${stats.defense}'),
-                            Text('special-attack: ${stats.specialAttack}'),
-                            Text('special-defense: ${stats.specialDefense}'),
-                            Text('speed: ${stats.speed}'),
+                            LineBarIndicator(
+                              title: 'hp',
+                              value: stats.hp,
+                              color: widget.backgroundColor,
+                            ),
+                            LineBarIndicator(
+                              title: 'attack',
+                              value: stats.attack,
+                              color: widget.backgroundColor,
+                            ),
+                            LineBarIndicator(
+                              title: 'defense',
+                              value: stats.defense,
+                              color: widget.backgroundColor,
+                            ),
+                            LineBarIndicator(
+                              title: 'special. Attack',
+                              value: stats.specialAttack,
+                              color: widget.backgroundColor,
+                            ),
+                            LineBarIndicator(
+                              title: 'special. Defense',
+                              value: stats.specialDefense,
+                              color: widget.backgroundColor,
+                            ),
+                            LineBarIndicator(
+                              title: 'speed',
+                              value: stats.speed,
+                              color: widget.backgroundColor,
+                            ),
                           ],
                         ),
                       ],
@@ -183,6 +208,3 @@ class _BodyState extends State<_Body> {
     );
   }
 }
-
-
-
