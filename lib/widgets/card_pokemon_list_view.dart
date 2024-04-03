@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:pokedex_app/screens/pokemon_detail_screen.dart';
+import 'package:pokedex_app/screens/pokemon_details_screen.dart';
 
 class CardPokemonListView extends StatefulWidget {
   // final Color backgroundColor;

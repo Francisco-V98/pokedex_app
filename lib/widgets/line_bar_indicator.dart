@@ -46,7 +46,7 @@ class LineBarIndicator extends StatelessWidget {
                   child: LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(100),
                     minHeight: 24,
-                    value: value / 100,
+                    value: value / 255,
                     color: color,
                     backgroundColor: color.withOpacity(0.2),
                   ),

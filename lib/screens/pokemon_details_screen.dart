@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/intrastrucuture/providers/pokemon_detail_provider.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_details_provider.dart';
 import 'package:pokedex_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -119,6 +119,7 @@ class _BodyState extends State<_Body> {
     if (stats == null) {
       return const CircularProgressIndicator();
     }
+
     return DefaultTabController(
       length: 3,
       child: Column(
@@ -137,44 +138,7 @@ class _BodyState extends State<_Body> {
                 height: 377,
                 child: TabBarView(
                   children: [
-                    Column(
-                      children: [
-                        Column(
-                          children: [
-                            LineBarIndicator(
-                              title: 'hp',
-                              value: stats.hp,
-                              color: widget.backgroundColor,
-                            ),
-                            LineBarIndicator(
-                              title: 'attack',
-                              value: stats.attack,
-                              color: widget.backgroundColor,
-                            ),
-                            LineBarIndicator(
-                              title: 'defense',
-                              value: stats.defense,
-                              color: widget.backgroundColor,
-                            ),
-                            LineBarIndicator(
-                              title: 'special. Attack',
-                              value: stats.specialAttack,
-                              color: widget.backgroundColor,
-                            ),
-                            LineBarIndicator(
-                              title: 'special. Defense',
-                              value: stats.specialDefense,
-                              color: widget.backgroundColor,
-                            ),
-                            LineBarIndicator(
-                              title: 'speed',
-                              value: stats.speed,
-                              color: widget.backgroundColor,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    statsSection(stats),
                     const Center(child: Text('Hola 2')),
                     const Center(child: Text('Hola 3')),
                   ],
@@ -184,6 +148,47 @@ class _BodyState extends State<_Body> {
           ),
         ],
       ),
+    );
+  }
+
+  Column statsSection(stats) {
+    return Column(
+      children: [
+        Column(
+          children: [
+            LineBarIndicator(
+              title: 'hp',
+              value: stats.hp,
+              color: widget.backgroundColor,
+            ),
+            LineBarIndicator(
+              title: 'attack',
+              value: stats.attack,
+              color: widget.backgroundColor,
+            ),
+            LineBarIndicator(
+              title: 'defense',
+              value: stats.defense,
+              color: widget.backgroundColor,
+            ),
+            LineBarIndicator(
+              title: 'special. Attack',
+              value: stats.specialAttack,
+              color: widget.backgroundColor,
+            ),
+            LineBarIndicator(
+              title: 'special. Defense',
+              value: stats.specialDefense,
+              color: widget.backgroundColor,
+            ),
+            LineBarIndicator(
+              title: 'speed',
+              value: stats.speed,
+              color: widget.backgroundColor,
+            ),
+          ],
+        ),
+      ],
     );
   }
 
