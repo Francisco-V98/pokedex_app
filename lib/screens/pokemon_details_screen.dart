@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_information_provider.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_stats_provider.dart';
 import 'package:pokedex_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -58,11 +59,17 @@ class _BodyState extends State<_Body> {
   void initState() {
     super.initState();
     getStats();
+    getInformation();
   }
 
   Future<void> getStats() async {
     await Provider.of<PokemonStatsProvider>(context, listen: false)
         .fetchPokemonDetails(widget.namePokemon);
+  }
+
+  Future<void> getInformation() async {
+    await Provider.of<PokemonInformationProvider>(context, listen: false)
+        .fetchPokemonInformation(widget.namePokemon);
   }
 
   @override
@@ -91,6 +98,8 @@ class _BodyState extends State<_Body> {
 
   Widget whiteSectionData(BuildContext context) {
     final stats = Provider.of<PokemonStatsProvider>(context).pokemonStats;
+    final information =
+        Provider.of<PokemonInformationProvider>(context).pokemonInformation;
     return Expanded(
       child: Center(
         heightFactor: 1,
@@ -107,7 +116,7 @@ class _BodyState extends State<_Body> {
             children: [
               const SizedBox(height: 80),
               pokemonID(),
-              tabBarPokemonData(stats),
+              tabBarPokemonData(stats, information),
             ],
           ),
         ),
@@ -115,7 +124,7 @@ class _BodyState extends State<_Body> {
     );
   }
 
-  Widget tabBarPokemonData(stats) {
+  Widget tabBarPokemonData(stats, information) {
     if (stats == null) {
       return const CircularProgressIndicator();
     }
@@ -128,7 +137,7 @@ class _BodyState extends State<_Body> {
             tabs: [
               Tab(text: 'Estadisticas'),
               Tab(text: 'Informacion'),
-              Tab(text: 'Movimientos'),
+              Tab(text: 'Evolucion'),
             ],
           ),
           Column(
@@ -139,7 +148,7 @@ class _BodyState extends State<_Body> {
                 child: TabBarView(
                   children: [
                     statsSection(stats),
-                    const Center(child: Text('Hola 2')),
+                    informationSection(information),
                     const Center(child: Text('Hola 3')),
                   ],
                 ),
@@ -151,7 +160,49 @@ class _BodyState extends State<_Body> {
     );
   }
 
-  Column statsSection(stats) {
+  Widget informationSection(information) {
+    return SizedBox(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              TextDataInformation(
+                title: 'Description',
+                description: information.flavorText,
+              ),
+              TextDataInformation(
+                title: 'Name',
+                description: information.name,
+              ),
+              TextDataInformation(
+                title: 'ID',
+                description: information.id.toString(),
+              ),
+              TextDataInformation(
+                title: 'Base Happiness:',
+                description: information.baseHappiness.toString(),
+              ),
+              TextDataInformation(
+                title: 'Capture Rate',
+                description: '${information.captureRate.toString()}%',
+              ),
+              TextDataInformation(
+                title: 'Habitat',
+                description: information.habitat,
+              ),
+              TextDataInformation(
+                title: 'Growth Rate',
+                description: information.growthRate,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget statsSection(stats) {
     return Column(
       children: [
         Column(
@@ -209,6 +260,38 @@ class _BodyState extends State<_Body> {
             color: widget.backgroundColor,
           ),
         ),
+      ],
+    );
+  }
+}
+
+class TextDataInformation extends StatelessWidget {
+  final String title;
+  final String description;
+  const TextDataInformation({
+    super.key,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 2),
+        SizedBox(
+          width: 330,
+          child: Text(description.replaceAll('\n', ' ')),
+        ),
+        const SizedBox(height: 6),
+        const Divider(),
       ],
     );
   }
