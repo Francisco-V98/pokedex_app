@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/intrastrucuture/models/pokemon_stats_model.dart';
-import 'package:pokedex_app/intrastrucuture/services/pokemon_basic_service.dart';
+import 'package:pokedex_app/intrastrucuture/services/pokemon_service.dart';
 
-class PokemonDetailsProvider extends ChangeNotifier {
+class PokemonStatsProvider extends ChangeNotifier {
   final PokemonBasicService _pokemonService = PokemonBasicService();
 
   PokemonStatsModel? _pokemonStats;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/intrastrucuture/providers/pokemon_details_provider.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_stats_provider.dart';
 import 'package:pokedex_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +61,7 @@ class _BodyState extends State<_Body> {
   }
 
   Future<void> getStats() async {
-    await Provider.of<PokemonDetailsProvider>(context, listen: false)
+    await Provider.of<PokemonStatsProvider>(context, listen: false)
         .fetchPokemonDetails(widget.namePokemon);
   }
 
@@ -90,7 +90,7 @@ class _BodyState extends State<_Body> {
   }
 
   Widget whiteSectionData(BuildContext context) {
-    final stats = Provider.of<PokemonDetailsProvider>(context).pokemonStats;
+    final stats = Provider.of<PokemonStatsProvider>(context).pokemonStats;
     return Expanded(
       child: Center(
         heightFactor: 1,
