@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PokemonBasicProvider()),
-        ChangeNotifierProvider(create: (context) => PokemonDetailProvider()),
+        ChangeNotifierProvider(create: (context) => PokemonDetailsProvider()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

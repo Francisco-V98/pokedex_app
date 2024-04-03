@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_detail_provider.dart';
+import 'package:provider/provider.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
   final Color backgroundColor;
@@ -51,10 +53,16 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+  @override
+  void initState() {
+    super.initState();
+    getStats();
+  }
 
-
-
-
+  Future<void> getStats() async {
+    await Provider.of<PokemonDetailsProvider>(context, listen: false)
+        .fetchPokemonDetails(widget.namePokemon);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +89,7 @@ class _BodyState extends State<_Body> {
   }
 
   Widget whiteSectionData(BuildContext context) {
+    final stats = Provider.of<PokemonDetailsProvider>(context).pokemonStats;
     return Expanded(
       child: Center(
         heightFactor: 1,
@@ -97,7 +106,7 @@ class _BodyState extends State<_Body> {
             children: [
               const SizedBox(height: 80),
               pokemonID(),
-              tabBarPokemonData(),
+              tabBarPokemonData(stats),
             ],
           ),
         ),
@@ -105,12 +114,15 @@ class _BodyState extends State<_Body> {
     );
   }
 
-  Widget tabBarPokemonData() {
-    return const DefaultTabController(
+  Widget tabBarPokemonData(stats) {
+    if (stats == null) {
+      return const CircularProgressIndicator();
+    }
+    return DefaultTabController(
       length: 3,
       child: Column(
         children: [
-          TabBar(
+          const TabBar(
             tabs: [
               Tab(text: 'Estadisticas'),
               Tab(text: 'Informacion'),
@@ -126,25 +138,20 @@ class _BodyState extends State<_Body> {
                   children: [
                     Column(
                       children: [
-                        Column(children: [
-                          Text('hp'),
-                          Text('Number'),
-                          Text('attack'),
-                          Text('Number'),
-                          Text('defense'),
-                          Text('Number'),
-                          Text('special-attack'),
-                          Text('Number'),
-                          Text('special-defense'),
-                          Text('Number'),
-                          Text('speed'),
-                          Text('Number'),
-                          Text('defense'),
-                        ],),
+                        Column(
+                          children: [
+                            Text('hp: ${stats.hp}'),
+                            Text('attack: ${stats.attack}'),
+                            Text('defense: ${stats.defense}'),
+                            Text('special-attack: ${stats.specialAttack}'),
+                            Text('special-defense: ${stats.specialDefense}'),
+                            Text('speed: ${stats.speed}'),
+                          ],
+                        ),
                       ],
                     ),
-                    Center(child: Text('Hola 2')),
-                    Center(child: Text('Hola 3')),
+                    const Center(child: Text('Hola 2')),
+                    const Center(child: Text('Hola 3')),
                   ],
                 ),
               ),
@@ -176,3 +183,6 @@ class _BodyState extends State<_Body> {
     );
   }
 }
+
+
+

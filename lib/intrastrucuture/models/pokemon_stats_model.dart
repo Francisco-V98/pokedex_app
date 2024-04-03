@@ -1,33 +1,31 @@
 class PokemonStatsModel {
-  int baseStat;
-  int effort;
-  PokemonStatModel stat;
+  final int hp;
+  final int attack;
+  final int defense;
+  final int specialAttack;
+  final int specialDefense;
+  final int speed;
 
   PokemonStatsModel({
-    required this.baseStat,
-    required this.effort,
-    required this.stat,
+    required this.hp,
+    required this.attack,
+    required this.defense,
+    required this.specialAttack,
+    required this.specialDefense,
+    required this.speed,
   });
 
   factory PokemonStatsModel.fromJson(Map<String, dynamic> json) {
+    const String name = 'stats';
+    const String value = 'base_stat';
+    
     return PokemonStatsModel(
-      baseStat: json['base_stat'],
-      effort: json['effort'],
-      stat: PokemonStatModel.fromJson(json['stat']),
-    );
-  }
-}
-
-class PokemonStatModel {
-  String name;
-
-  PokemonStatModel({
-    required this.name,
-  });
-
-  factory PokemonStatModel.fromJson(Map<String, dynamic> json) {
-    return PokemonStatModel(
-      name: json['name'],
+      hp: json[name][0][value],
+      attack: json[name][1][value],
+      defense: json[name][2][value],
+      specialAttack: json[name][3][value],
+      specialDefense: json[name][4][value],
+      speed: json[name][5][value],
     );
   }
 }
