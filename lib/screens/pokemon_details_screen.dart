@@ -125,7 +125,7 @@ class _BodyState extends State<_Body> {
   }
 
   Widget tabBarPokemonData(stats, information) {
-    if (stats == null) {
+    if (stats == null || information == null) {
       return const CircularProgressIndicator();
     }
 
@@ -178,6 +178,10 @@ class _BodyState extends State<_Body> {
               TextDataInformation(
                 title: 'ID',
                 description: information.id.toString(),
+              ),
+              TextDataInformation(
+                title: 'Evolution ID',
+                description: information.evolutionId(),
               ),
               TextDataInformation(
                 title: 'Base Happiness:',

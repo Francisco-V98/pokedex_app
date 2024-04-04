@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pokedex_app/intrastrucuture/models/pokemon_evolution_model.dart';
 import 'package:pokedex_app/intrastrucuture/models/pokemon_information_model.dart';
 import 'package:pokedex_app/intrastrucuture/models/pokemon_stats_model.dart';
 
@@ -38,7 +39,8 @@ class PokemonBasicService {
       if (response.statusCode == 200) {
         return PokemonStatsModel.fromJson(response.data);
       } else {
-        throw Exception('Failed to load pokemon details: ${response.statusCode}');
+        throw Exception(
+            'Failed to load pokemon details: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Failed to load pokemon details: $e');
@@ -51,6 +53,7 @@ class PokemonBasicService {
       String url = '$baseUrl/pokemon-species/$nameLowerCase';
       Response response = await dio.get(url);
       if (response.statusCode == 200) {
+
         return PokemonInformationModel.fromJson(response.data);
       } else {
         throw Exception('Failed to load pokemon details: ${response.statusCode}');
