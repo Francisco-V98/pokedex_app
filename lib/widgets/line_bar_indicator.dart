@@ -25,7 +25,7 @@ class LineBarIndicator extends StatelessWidget {
                   title.toUpperCase(),
                   style:  TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     color: color,
                   ),
                 ),
@@ -33,7 +33,7 @@ class LineBarIndicator extends StatelessWidget {
                   title.toUpperCase(),
                   style:  const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     color: Colors.black38,
                   ),
                 ),
