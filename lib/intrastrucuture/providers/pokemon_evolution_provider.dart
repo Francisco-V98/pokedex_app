@@ -4,8 +4,11 @@ import 'package:pokedex_app/intrastrucuture/services/pokemon_service.dart';
 
 class PokemonEvolutionProvider extends ChangeNotifier {
   final PokemonBasicService _pokemonService = PokemonBasicService();
+  late PokemonEvolutionModel? _pokemonEvolution;
 
-  PokemonEvolutionModel? _pokemonEvolution;
+  PokemonEvolutionProvider() {
+    _pokemonEvolution = PokemonEvolutionModel(evolutions: []);
+  }
 
   PokemonEvolutionModel? get pokemonEvolution => _pokemonEvolution;
 

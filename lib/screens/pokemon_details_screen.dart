@@ -76,13 +76,16 @@ class _BodyState extends State<_Body> {
     await Provider.of<PokemonStatsProvider>(context, listen: false)
         .fetchPokemonDetails(widget.namePokemon);
   }
-  
-    Future<void> getInformation() async {
+
+  Future<void> getInformation() async {
     await Provider.of<PokemonInformationProvider>(context, listen: false)
         .fetchPokemonInformation(widget.namePokemon);
     setState(() {
-      evolutionId = Provider.of<PokemonInformationProvider>(context, listen: false)
-          .pokemonInformation?.evolutionId.toString();
+      evolutionId =
+          Provider.of<PokemonInformationProvider>(context, listen: false)
+              .pokemonInformation
+              ?.evolutionId
+              .toString();
     });
     getEvolution();
   }
@@ -190,31 +193,28 @@ class _BodyState extends State<_Body> {
   }
 
   Widget evolutionSection(evolution) {
+    Set<String> uniqueIds = <String>{};
     return SizedBox(
       width: double.infinity,
       height: 377,
       child: Padding(
         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
         child: ListView.builder(
-          itemCount: 1,
+          itemCount: evolution.evolutions.length,
           itemBuilder: (BuildContext context, int index) {
             final evolutionItem = evolution.evolutions[index];
-            return Column(
-              children: [
-                ListTile(
-                  leading: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('ID: ${evolutionItem.id}'),
-                      Text('Name: ${evolutionItem.name}'),
-                      Text('evolution phase: ${index + 1}'),
-                    ],
-                  ),
-                  trailing: Image.network(evolutionItem.imgPokemon),
-                ),
-                Divider(color: widget.backgroundColor.withOpacity(0.7)),
-              ],
-            );
+            if (uniqueIds.contains(evolutionItem.id)) {
+              return const SizedBox.shrink();
+            } else {
+              uniqueIds.add(evolutionItem.id);
+              return CardPokemonEvolution(
+                name: 'Name: ${evolutionItem.name}',
+                id: 'Pokemon ID: ${evolutionItem.id}',
+                idEvolution: 'Evolution phase: ${index + 1}',
+                image: evolutionItem.imgPokemon,
+                color: widget.backgroundColor.withOpacity(0.7),
+              );
+            }
           },
         ),
       ),
@@ -231,34 +231,42 @@ class _BodyState extends State<_Body> {
               TextDataInformation(
                 title: 'Description',
                 description: information.flavorText,
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'Name',
                 description: information.name,
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'ID',
                 description: information.id.toString(),
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'Evolution ID',
                 description: information.evolutionId,
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'Base Happiness:',
                 description: information.baseHappiness.toString(),
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'Capture Rate',
                 description: '${information.captureRate.toString()}%',
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'Habitat',
                 description: information.habitat,
+                color: widget.backgroundColor,
               ),
               TextDataInformation(
                 title: 'Growth Rate',
                 description: information.growthRate,
+                color: widget.backgroundColor,
               ),
             ],
           ),
@@ -325,38 +333,6 @@ class _BodyState extends State<_Body> {
             color: widget.backgroundColor,
           ),
         ),
-      ],
-    );
-  }
-}
-
-class TextDataInformation extends StatelessWidget {
-  final String title;
-  final String description;
-  const TextDataInformation({
-    super.key,
-    required this.title,
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 2),
-        SizedBox(
-          width: 330,
-          child: Text(description.replaceAll('\n', ' ')),
-        ),
-        const SizedBox(height: 6),
-        const Divider(),
       ],
     );
   }
