@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_basic_provider.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_evolution_provider.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_information_provider.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_stats_provider.dart';
 import 'package:pokedex_app/screens/screens.dart';
@@ -19,6 +20,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PokemonBasicProvider()),
         ChangeNotifierProvider(create: (context) => PokemonStatsProvider()),
         ChangeNotifierProvider(create: (context) => PokemonInformationProvider()),
+        ChangeNotifierProvider(create: (context) => PokemonEvolutionProvider()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

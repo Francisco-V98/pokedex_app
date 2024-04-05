@@ -17,4 +17,9 @@ class PokemonStatsProvider extends ChangeNotifier {
       throw Exception('Failed to fetch Pokemon details: $e');
     }
   }
+
+  void resetStats() {
+    _pokemonStats = null;
+    notifyListeners();
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex_app/intrastrucuture/providers/pokemon_evolution_provider.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_information_provider.dart';
 import 'package:pokedex_app/intrastrucuture/providers/pokemon_stats_provider.dart';
 import 'package:pokedex_app/widgets/widgets.dart';
@@ -55,10 +56,19 @@ class _Body extends StatefulWidget {
 }
 
 class _BodyState extends State<_Body> {
+  String? evolutionId;
+
   @override
   void initState() {
     super.initState();
     getStats();
+    getInformation();
+    getEvolution();
+  }
+
+  @override
+  void didUpdateWidget(_Body oldWidget) {
+    super.didUpdateWidget(oldWidget);
     getInformation();
   }
 
@@ -66,10 +76,22 @@ class _BodyState extends State<_Body> {
     await Provider.of<PokemonStatsProvider>(context, listen: false)
         .fetchPokemonDetails(widget.namePokemon);
   }
-
-  Future<void> getInformation() async {
+  
+    Future<void> getInformation() async {
     await Provider.of<PokemonInformationProvider>(context, listen: false)
         .fetchPokemonInformation(widget.namePokemon);
+    setState(() {
+      evolutionId = Provider.of<PokemonInformationProvider>(context, listen: false)
+          .pokemonInformation?.evolutionId.toString();
+    });
+    getEvolution();
+  }
+
+  Future<void> getEvolution() async {
+    if (evolutionId != null) {
+      await Provider.of<PokemonEvolutionProvider>(context, listen: false)
+          .fetchPokemonEvolution(evolutionId!);
+    }
   }
 
   @override
@@ -100,6 +122,8 @@ class _BodyState extends State<_Body> {
     final stats = Provider.of<PokemonStatsProvider>(context).pokemonStats;
     final information =
         Provider.of<PokemonInformationProvider>(context).pokemonInformation;
+    final evolution =
+        Provider.of<PokemonEvolutionProvider>(context).pokemonEvolution;
     return Expanded(
       child: Center(
         heightFactor: 1,
@@ -116,7 +140,7 @@ class _BodyState extends State<_Body> {
             children: [
               const SizedBox(height: 80),
               pokemonID(),
-              tabBarPokemonData(stats, information),
+              tabBarPokemonData(stats, information, evolution),
             ],
           ),
         ),
@@ -124,9 +148,14 @@ class _BodyState extends State<_Body> {
     );
   }
 
-  Widget tabBarPokemonData(stats, information) {
-    if (stats == null || information == null) {
-      return const CircularProgressIndicator();
+  Widget tabBarPokemonData(stats, information, evolution) {
+    if (stats == null || information == null || evolution == null) {
+      return SizedBox(
+        width: double.infinity,
+        height: 377,
+        child: Center(
+            child: CircularProgressIndicator(color: widget.backgroundColor)),
+      );
     }
 
     return DefaultTabController(
@@ -149,13 +178,45 @@ class _BodyState extends State<_Body> {
                   children: [
                     statsSection(stats),
                     informationSection(information),
-                    const Center(child: Text('Hola 3')),
+                    evolutionSection(evolution),
                   ],
                 ),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget evolutionSection(evolution) {
+    return SizedBox(
+      width: double.infinity,
+      height: 377,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+        child: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) {
+            final evolutionItem = evolution.evolutions[index];
+            return Column(
+              children: [
+                ListTile(
+                  leading: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('ID: ${evolutionItem.id}'),
+                      Text('Name: ${evolutionItem.name}'),
+                      Text('evolution phase: ${index + 1}'),
+                    ],
+                  ),
+                  trailing: Image.network(evolutionItem.imgPokemon),
+                ),
+                Divider(color: widget.backgroundColor.withOpacity(0.7)),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -181,7 +242,7 @@ class _BodyState extends State<_Body> {
               ),
               TextDataInformation(
                 title: 'Evolution ID',
-                description: information.evolutionId(),
+                description: information.evolutionId,
               ),
               TextDataInformation(
                 title: 'Base Happiness:',

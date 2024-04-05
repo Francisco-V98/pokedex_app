@@ -7,6 +7,7 @@ class PokemonInformationModel {
   final String? flavorText;
   final String? growthRate;
   final String? evolutionChain;
+  final String? evolutionId;
 
   PokemonInformationModel({
     this.name,
@@ -17,9 +18,12 @@ class PokemonInformationModel {
     this.flavorText,
     this.growthRate,
     this.evolutionChain,
+    this.evolutionId,
   });
 
   factory PokemonInformationModel.fromJson(Map<String, dynamic> json) {
+    final String urlEvolution = json['evolution_chain']['url'];
+    final String evolutionId = urlEvolution.split('/').reversed.skip(1).first;
     return PokemonInformationModel(
       baseHappiness: json['base_happiness'],
       name: json['name'],
@@ -29,16 +33,7 @@ class PokemonInformationModel {
       flavorText: json['flavor_text_entries'][0]['flavor_text'],
       growthRate: json['growth_rate']['name'],
       evolutionChain: json['evolution_chain']['url'],
+      evolutionId: evolutionId,
     );
-  }
-
-  String evolutionId() {
-    if (evolutionChain != null && evolutionChain!.isNotEmpty) {
-      String urlWithoutTrailingSlash = evolutionChain!.endsWith('/')
-          ? evolutionChain!.substring(0, evolutionChain!.length - 1)
-          : evolutionChain!;
-      return urlWithoutTrailingSlash.split('/').last;
-    }
-    return '';
   }
 }

@@ -62,4 +62,21 @@ class PokemonBasicService {
       throw Exception('Failed to load pokemon details: $e');
     }
   }
+
+    Future<PokemonEvolutionModel> getPokemonEvolution(String idEvolution) async {
+    try {
+      String url = '$baseUrl/evolution-chain/$idEvolution';
+      Response response = await dio.get(url);
+      if (response.statusCode == 200) {
+
+        return PokemonEvolutionModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load pokemon evolution: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load pokemon evolution: $e');
+    }
+  }
+
+
 }
